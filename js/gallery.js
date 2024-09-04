@@ -67,7 +67,7 @@ const images = [
 const container = document.querySelector('.gallery');
 
 container.insertAdjacentHTML('beforeend', generateImagesMarkup(images));
-function generateImagesMarkup () {
+function generateImagesMarkup (images) {
     return images.map(image => 
         `<li class="gallery-item">
             <a class="gallery-link" href="${image.original}">
@@ -81,15 +81,12 @@ function generateImagesMarkup () {
 
 container.addEventListener('click', onImageClick)
 function onImageClick (event) {
-    if (event.target === event.currentTarget) {      
+    event.preventDefault();
+    if (event.target.nodeName !== 'IMG') {      
     // console.log("click on UL");
         return;
     }
 
-    const currentImage = event.target.closest('.gallery-item');
-    console.log(currentImage);
-    
-    
-const instance = basicLightbox.create(`<img src="${event.target.dataset.source}" width="1112" height="640"/>`);
-instance.show();
+    const instance = basicLightbox.create(`<img src="${event.target.dataset.source}" width="1112" height="640"/>`);
+    instance.show();
 }
